@@ -1,0 +1,2 @@
+# SecretSantaBack
+### A self-hosted Secret Santa web application. Create groups, draw names, and exchange gift ideas with friends this winter. This is the backend part of the application. Look for the client following this URL.
