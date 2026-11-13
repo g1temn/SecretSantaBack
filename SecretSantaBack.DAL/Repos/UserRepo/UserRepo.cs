@@ -21,24 +21,12 @@ public class UserRepo(SecretSantaBackDbContext context) : IUserRepo
         var user = await context.Users.FirstOrDefaultAsync(u => u.Id == id);
         if (user == null) return null;
 
-        return new GetUserDto
-        {
-            Id = user.Id,
-            Username = user.Username,
-            Bio = user.Bio,
-            Email = user.Email
-        };
+        return ToDto(user);
     }
 
     public async Task<List<GetUserDto>> GetUsersAsync()
     {
-        return await context.Users.AsNoTracking().Select(u => new GetUserDto
-        {
-            Id = u.Id,
-            Username = u.Username,
-            Bio = u.Bio,
-            Email = u.Email
-        }).ToListAsync();
+        return await context.Users.AsNoTracking().Select(u => ToDto(u)).ToListAsync();
     }
 
     public async Task<bool> RegisterUserAsync(RegisterUserDto dto)
@@ -65,12 +53,14 @@ public class UserRepo(SecretSantaBackDbContext context) : IUserRepo
         user.Email = dto.Email;
 
         await context.SaveChangesAsync();
-        return new GetUserDto
-        {
-            Id = user.Id,
-            Username = user.Username,
-            Bio = user.Bio,
-            Email = user.Email
-        };
+        return ToDto(user);
     }
+
+    private static GetUserDto ToDto(User user) => new()
+    {
+        Id = user.Id,
+        Username = user.Username,
+        Bio = user.Bio,
+        Email = user.Email
+    };
 }
