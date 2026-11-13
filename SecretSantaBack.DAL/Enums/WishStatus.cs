@@ -2,6 +2,6 @@
 
 public enum WishStatus
 {
-    Published,
-    Hidden
+    Published = 0,
+    Hidden = 1,
 }
