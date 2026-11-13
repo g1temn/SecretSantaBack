@@ -16,3 +16,19 @@ ConnectionStrings__Default=Server=localhost;Database=SecretSantaDb;Trusted_Conne
 ```
 
 If the file or the `ConnectionStrings__Default` key is missing, the application stops at startup with the error `Connection string 'Default' is not configured.`
+
+## Database migrations
+
+Run these commands from the `SecretSantaBack.WebAPI/` folder, so the `.env` file is found:
+
+```bash
+cd SecretSantaBack.WebAPI
+
+# Create or update the database using the existing migrations
+dotnet ef database update --project ../SecretSantaBack.DAL
+
+# Add a new migration after changing the entities
+dotnet ef migrations add <MigrationName> --project ../SecretSantaBack.DAL
+```
+
+The `dotnet-ef` tool is required. Install it with `dotnet tool install --global dotnet-ef`.
